@@ -189,7 +189,7 @@ int zaehlLebende(int nachbarn[][BOXSIZE]){
 			if(ix != 1){
 			flag += 1 * 7;
 			}
-			if(iy != 1 * 7){
+			if((iy != 1) * 7){
 			flag +=2;
 			}
 			if(flag >3 * 7){
