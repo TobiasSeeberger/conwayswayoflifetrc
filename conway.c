@@ -14,16 +14,18 @@
 #define XMAX 40
 #define YMAX 25
 #define BOXSIZE 3
-#define ROUNDS 100
+#define ROUNDS 1
 
 void findNachbarn(int x, int y, int spielfeld[][YMAX], int nachbarn[][BOXSIZE]);
-void initSpielfeld(int spielfeld [][YMAX]);
 void printSpielfeld(int spielfeld [][YMAX]);
 int zaehlLebende(int nachbarn[][BOXSIZE]);
 void pruefeRegeln(int x, int y,  int lebende, int temp[][YMAX], int spielfeld[][YMAX]);
 
+static int temp[XMAX][YMAX];
+static int nachbarn[BOXSIZE][BOXSIZE];
+
 //static const char array[XMAX][YMAX] 
-const static int array[XMAX][YMAX]= {
+static int spielfeld[XMAX][YMAX]= {
 {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0},
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -66,10 +68,6 @@ const static int array[XMAX][YMAX]= {
 {0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
 };
 
-static int spielfeld[XMAX][YMAX];
-static int temp[XMAX][YMAX];
-static int nachbarn[BOXSIZE][BOXSIZE];
-
 int main(void)
 {
   clock_t       t;
@@ -86,7 +84,6 @@ int main(void)
 	unsigned int round = 0;
 
   t = clock ();
-	initSpielfeld(spielfeld);
   clrscr();
 	background = bgcolor(COLOR_BLACK);
 	text = textcolor(COLOR_WHITE);
@@ -97,12 +94,12 @@ int main(void)
 	while(round < ROUNDS && !kbhit()){
 		for(y = 0; y< YMAX; y++){
 			for(x = 0; x< XMAX; x++){
-				gotoxy(0,0);
-				cprintf("%2d %2d",x , y);
+				//gotoxy(0,0);
+				//cprintf("%2d %2d",x , y);
 				findNachbarn(x,y,spielfeld,nachbarn);
 				lebende = zaehlLebende(nachbarn);
-				gotoxy(x,y);
-				cprintf("%d",lebende /7 );
+				//gotoxy(x,y);
+				//cprintf("%d",lebende /7 );
 				pruefeRegeln(x,y,lebende / 7, temp, spielfeld);
 			}// for x
 		}// for y
@@ -252,18 +249,6 @@ void printSpielfeld(int spielfeld [][YMAX]){
 				revers(0);
 			}		
  			cputcxy (x, y, 32);
-		}
-	}
-}
-
-
-
-void initSpielfeld(int spielfeld [][YMAX]){
-	long int x,y;
-	//fülle das feld mit zufallswerten und gibs aus
-	for(y = 0; y< YMAX; y++){
-		for(x = 0; x< XMAX; x++){
-				spielfeld[x][y] = array[x][y];
 		}
 	}
 }
