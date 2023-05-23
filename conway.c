@@ -16,10 +16,10 @@
 #define BOXSIZE 3
 #define ROUNDS 1
 
-void findNachbarn(int x, int y, int spielfeld[][YMAX], int nachbarn[][BOXSIZE]);
+void findNachbarn(int x,int y,int spielfeld[][YMAX],int nachbarn[][BOXSIZE]);
 void printSpielfeld(int spielfeld [][YMAX]);
 int zaehlLebende(int nachbarn[][BOXSIZE]);
-void pruefeRegeln(int x, int y,  int lebende, int temp[][YMAX], int spielfeld[][YMAX]);
+void pruefeRegeln( int x,int y,int lebende,int temp[][YMAX],int spielfeld[][YMAX]);
 
 static int temp[XMAX][YMAX];
 static int nachbarn[BOXSIZE][BOXSIZE];
@@ -100,7 +100,7 @@ int main(void)
 				lebende = zaehlLebende(nachbarn);
 				//gotoxy(x,y);
 				//cprintf("%d",lebende /7 );
-				pruefeRegeln(x,y,lebende / 7, temp, spielfeld);
+				pruefeRegeln(x,y,lebende, temp, spielfeld);
 			}// for x
 		}// for y
 
@@ -141,7 +141,15 @@ int main(void)
 
 void pruefeRegeln(int x, int y,  int lebende, int temp[][YMAX], int spielfeld[][YMAX]){
 	//hier kommen meine regeln
-	if(spielfeld[x][y] == 0 ){
+	if(lebende==3 || lebende==2)
+	{
+		temp[x][y] = 1;
+	}
+	else
+	{
+		temp[x][y] = 0;
+	}
+	/* if(spielfeld[x][y] == 0 ){
 		if(lebende == 3){
 			temp[x][y] = 1;
 //			printf("t3\n\n");
@@ -170,7 +178,7 @@ void pruefeRegeln(int x, int y,  int lebende, int temp[][YMAX], int spielfeld[][
 			temp[x][y] = 0;
 //			printf(">3\n\n");
 		}
-	}
+	} */
 }
 
 
@@ -181,16 +189,16 @@ int zaehlLebende(int nachbarn[][BOXSIZE]){
 		for(ix = 0; ix < BOXSIZE; ix++){
 			//prüfe dass wir nicht auf unserer eigneen position sind
 			
-		  flag = 3 * 7 ;
+		  flag = 3;
 			
 			if(ix != 1){
-			flag += 1 * 7;
+			flag += 1;
 			}
-			if((iy != 1) * 7){
+			if((iy != 1)){
 			flag +=2;
 			}
-			if(flag >3 * 7){
-				lebende += nachbarn[ix][iy] * 7;
+			if(flag >3){
+				lebende += nachbarn[ix][iy];
 			}
 		}//for ix
 	}//for iy	
