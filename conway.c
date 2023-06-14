@@ -78,10 +78,10 @@ int main(void)
   unsigned char background;
   unsigned char text;
         
-	int x;
-	int y;
-	int lebende;
-	unsigned int round = 0;
+	register unsigned x;
+	register unsigned y;
+	register unsigned char lebende;
+	register unsigned char round = 0;
 
   t = clock ();
   clrscr();
