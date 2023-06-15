@@ -16,7 +16,7 @@
 #define BOXSIZE 3
 #define ROUNDS 100
 
-void findNachbarn(char x,char y,char spielfeld[][YMAX],char nachbarn[][BOXSIZE]);
+void findNachbarn(register unsigned char x,register unsigned char y,char spielfeld[][YMAX],char nachbarn[][BOXSIZE]);
 
 static char temp[XMAX][YMAX];
 static char nachbarn[BOXSIZE][BOXSIZE];
@@ -75,8 +75,8 @@ int main(void)
   unsigned char background;
   unsigned char text;
         
-	char x, y, lebende;
-	unsigned char round = 0;
+	register unsigned char x, y, lebende;
+	register unsigned char round = 0;
 
   clrscr();
 	background = bgcolor(COLOR_BLACK);
@@ -87,16 +87,12 @@ int main(void)
              cputcxy (x, y, 32);
         }
     }
-//	signal (int sig, __sigfunc func);
 
 	t = clock();
 	while(round < ROUNDS && !kbhit()){
 		for(y = 0; y< YMAX; y++){
 			for(x = 0; x< XMAX; x++){
-				//gotoxy(0,0);
-				//cprintf("%2d %2d",x , y);
 				findNachbarn(x,y,spielfeld,nachbarn);
-				
 				
 				lebende = 0;
 				lebende += nachbarn[0][0];
@@ -108,12 +104,9 @@ int main(void)
 				lebende += nachbarn[1][2];
 				lebende += nachbarn[2][2];
 				
-				//gotoxy(x,y);
-				//cprintf("%d",lebende /7 );
 				if(spielfeld[x][y] == 0 ){
 		if(lebende == 3){
 			temp[x][y] = 1;
-//			printf("t3\n\n");
 		}
 	}
 	switch (lebende){
@@ -128,8 +121,8 @@ int main(void)
 
                 default: temp[x][y] = 0;
                 }
-			}// for x
-		}// for y
+			}
+		}
 
 		memcpy(spielfeld,temp,XMAX*YMAX);
 	
@@ -169,20 +162,12 @@ int main(void)
     return EXIT_SUCCESS;
 }
 
-
-
-
-
-
-
-
-void findNachbarn(char x, char y, char spielfeld[][YMAX], char nachbarn[][BOXSIZE]){
+void findNachbarn(register unsigned char x, register unsigned char y, char spielfeld[][YMAX], char nachbarn[][BOXSIZE]){
 	//gehe über alle nachbarn
-	unsigned char osx, ix;
-	unsigned char osy, iy; 
-	signed char ofy;
-	signed char ofx;
-	char temp;
+	register unsigned char osx, ix;
+	register unsigned char osy, iy; 
+	register signed char ofy;
+	register signed char ofx;
 	
 	for(ofy = y-1, iy=0; ofy <= (signed char)y+1; ++ofy , ++iy){
 		for(ofx = x-1,ix = 0; ofx <= (signed char)x+1; ++ofx , ++ix){
@@ -206,7 +191,6 @@ void findNachbarn(char x, char y, char spielfeld[][YMAX], char nachbarn[][BOXSIZ
 				else {
 					osx = ofx;
 				}
-		  //temp = spielfeld[osx][osy];
 			nachbarn[ix][iy] = spielfeld[osx][osy];				
 		}//for ofx
 	}//for ofy	
