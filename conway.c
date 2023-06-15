@@ -17,7 +17,6 @@
 #define ROUNDS 1
 
 void findNachbarn(char x,char y,char spielfeld[][YMAX],char nachbarn[][BOXSIZE]);
-char zaehlLebende();
 
 static char temp[XMAX][YMAX];
 static char nachbarn[BOXSIZE][BOXSIZE];
@@ -76,7 +75,7 @@ int main(void)
   unsigned char background;
   unsigned char text;
         
-	char x, y, lebende;
+	char x, y, lebende = 0;
 	unsigned char round = 0;
 
   clrscr();
@@ -97,7 +96,16 @@ int main(void)
 				//gotoxy(0,0);
 				//cprintf("%2d %2d",x , y);
 				findNachbarn(x,y,spielfeld,nachbarn);
-				lebende = zaehlLebende(nachbarn);
+				
+				lebende += nachbarn[0][0];
+				lebende += nachbarn[0][1];
+				lebende += nachbarn[0][2];
+				lebende += nachbarn[1][0];
+				lebende += nachbarn[1][2];
+				lebende += nachbarn[2][0];
+				lebende += nachbarn[2][1];
+				lebende += nachbarn[2][2];
+				
 				//gotoxy(x,y);
 				//cprintf("%d",lebende /7 );
 				if(spielfeld[x][y] == 0 ){
@@ -158,26 +166,6 @@ int main(void)
     /* Done */
     return EXIT_SUCCESS;
 }
-
-
-
-
-char zaehlLebende(){
-  char lebende = 0;
-
-		lebende += nachbarn[0][0];
-		lebende += nachbarn[0][1];
-		lebende += nachbarn[0][2];
-		lebende += nachbarn[1][0];
-		lebende += nachbarn[1][2];
-		lebende += nachbarn[2][0];
-		lebende += nachbarn[2][1];
-		lebende += nachbarn[2][2];
-	
-	return lebende;
-}
-
-
 
 void findNachbarn(char x, char y, char spielfeld[][YMAX], char nachbarn[][BOXSIZE]){
 	//gehe über alle nachbarn
